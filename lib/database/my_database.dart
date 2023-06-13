@@ -53,7 +53,15 @@ class MyDataBase {
     return newTaskDoc.set(task);
   }
 
-  static Future<QuerySnapshot<Task>> getTasks(String uId) async {
+  static Future<QuerySnapshot<Task>> getTasks(String uId) {
     return getTaskCollection(uId).get();
+  }
+
+  static Stream<QuerySnapshot<Task>> getTasksRealTimeUpdates(String uId) {
+    return getTaskCollection(uId).snapshots();
+  }
+
+  static Future<void> deleteTask(String uid, String taskId) {
+    return getTaskCollection(uid).doc(taskId).delete();
   }
 }
