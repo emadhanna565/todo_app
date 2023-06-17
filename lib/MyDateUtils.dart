@@ -5,4 +5,12 @@ class MyDateUtils {
     var formatter = DateFormat('yyyy-MM-dd');
     return formatter.format(dateTime);
   }
+
+  static DateTime dayOnly(DateTime dateTime) {
+    return DateTime(
+      dateTime.year,
+      dateTime.month,
+      dateTime.day,
+    );
+  }
 }

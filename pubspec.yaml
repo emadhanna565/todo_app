@@ -42,6 +42,8 @@ dependencies:
   provider: ^6.0.5
   flutter_slidable: ^3.0.0
   lottie: ^2.3.2
+  calendar_timeline: ^1.1.2
+  table_calendar: ^3.0.9
 
 dev_dependencies:
   flutter_test:
