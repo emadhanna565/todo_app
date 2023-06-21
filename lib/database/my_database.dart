@@ -24,18 +24,6 @@ class MyDataBase {
           toFirestore: (task, options) => task.toFireStore(),
         );
   }
-
-  static CollectionReference<Task> getTaskCollection(String uid) {
-    return getUSerCollection()
-        .doc(uid)
-        .collection(Task.collectionName)
-        .withConverter(
-          fromFirestore: (snapshot, options) =>
-              Task.fromFireStore(snapshot.data()!),
-          toFirestore: (task, options) => task.toFireStore(),
-        );
-  }
-
   static Future<void> addUser(User user) {
     var collection = getUSerCollection();
     return collection.doc(user.id).set(user);
@@ -48,23 +36,27 @@ class MyDataBase {
   }
 
   static Future<void> addTask(Task task, String uid) {
-    var newTaskDoc = getTaskCollection(uid).doc();
+    var newTaskDoc = getTasksCollection(uid).doc();
     task.id = newTaskDoc.id;
     return newTaskDoc.set(task);
   }
 
   static Future<QuerySnapshot<Task>> getTasks(String uId) {
-    return getTaskCollection(uId).get();
+    return getTasksCollection(uId).get();
   }
 
   static Stream<QuerySnapshot<Task>> getTasksRealTimeUpdates(
       String uId, int date) {
-    return getTaskCollection(uId)
+    return getTasksCollection(uId)
         .where('dateTime', isEqualTo: date)
         .snapshots();
   }
 
   static Future<void> deleteTask(String uid, String taskId) {
-    return getTaskCollection(uid).doc(taskId).delete();
+    return getTasksCollection(uid).doc(taskId).delete();
+  }
+
+  static Future<void> updateTask(String uid, Task task) {
+    return getTasksCollection(uid).doc(task.id).update(task.toFireStore());
   }
 }

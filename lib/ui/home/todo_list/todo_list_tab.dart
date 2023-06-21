@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todo_app/MyDateUtils.dart';
@@ -27,23 +28,6 @@ class _TodoListTapState extends State<TodoListTap> {
     return Container(
       child: Column(
         children: [
-          /*CalendarTimeline(
-            initialDate: selectedDate,
-            firstDate: DateTime.now().subtract(Duration(days: 365)),
-            lastDate: DateTime.now().add(Duration(days: 365)),
-            onDateSelected: (date) {
-              setState(() {
-                selectedDate = date;
-              });
-            },
-            leftMargin: 20,
-            monthColor: Colors.blueGrey,
-            dayColor: Colors.teal[200],
-            activeDayColor: Colors.white,
-            activeBackgroundDayColor: Colors.redAccent[100],
-            dotsColor: const Color(0xFF333A47),
-            locale: 'en_ISO',
-          ),*/
           TableCalendar(
             focusedDay: focusedDate,
             firstDay: DateTime.now().subtract(Duration(days: 365)),
@@ -72,22 +56,27 @@ class _TodoListTapState extends State<TodoListTap> {
                 return Text(snapshot.error.toString());
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  child: Lottie.asset(
+                    'assets/images/progress_indicator.json',
+                    height: 150,
+                    width: 150,
+                  ),
                 );
               }
               var taskList =
                   snapshot.data?.docs.map((doc) => doc.data()).toList();
-                  if (taskList?.isEmpty == true) {
-                    return const Center(
-                      child: Text("you don't have any tasks yet"),
-                    );
-                  }
-                  return ListView.builder(
-                    itemBuilder: (context, index) {
-                      return TaskItem(taskList![index]);
-                    },
-                    itemCount: taskList?.length ?? 0,
+              if (taskList?.isEmpty == true) {
+                Future.delayed(Duration(seconds: 5));
+                return const Center(
+                  child: Text("you don't have any tasks yet"),
+                );
+              }
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  return TaskItem(taskList![index]);
+                },
+                itemCount: taskList?.length ?? 0,
                   );
                 },
               )),

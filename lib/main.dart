@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/provider/auth_provider.dart';
+import 'package:todo_app/ui/home/edit_task/edit_task.dart';
 import 'package:todo_app/ui/home/home_screen.dart';
 import 'package:todo_app/ui/login/login_screen.dart';
 import 'package:todo_app/ui/register/register_screen.dart';
@@ -26,11 +27,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: TextTheme(
             headline4: TextStyle(
+                fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+            headline2: TextStyle(
                 fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.bold
-            )
-        ),
+                color: Color(0xffa9a9a9),
+                fontWeight: FontWeight.bold),
+            headline1: TextStyle(
+                fontSize: 24,
+                color: Color(0xff27971f),
+                fontWeight: FontWeight.bold)),
         appBarTheme: AppBarTheme(
           centerTitle: true,
           backgroundColor: Colors.transparent,
@@ -47,7 +52,8 @@ class MyApp extends StatelessWidget {
         SplashScreen.routeName: (_) => SplashScreen(),
         LoginScreen.routeName: (_) => LoginScreen(),
         RegisterScreen.routeName: (_) => RegisterScreen(),
-        HomeScreen.routeName: (_) => HomeScreen()
+        HomeScreen.routeName: (_) => HomeScreen(),
+        EditTasksScreen.routeName: (_) => EditTasksScreen(),
       },
       debugShowCheckedModeBanner: false,
       initialRoute: SplashScreen.routeName,
