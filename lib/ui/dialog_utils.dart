@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class DialogUtils {
   static void showLoadingDialog(BuildContext context, String message) {
@@ -8,7 +9,11 @@ class DialogUtils {
         return AlertDialog(
             content: Row(
           children: [
-            CircularProgressIndicator(),
+            Lottie.asset(
+              'assets/images/progress_indicator.json',
+              height: 60,
+              width: 60,
+            ),
             SizedBox(
               width: 12,
             ),
